@@ -10,6 +10,8 @@
  */
 
 import React from 'react';
+import 'semantic-ui-css/semantic.min.css';
+import { Header, Button } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -17,9 +19,12 @@ import messages from './messages';
 export default class HomePage extends React.PureComponent {
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <div>
+        <Header>
+          <FormattedMessage {...messages.header} />
+        </Header>
+        <Button> OK </Button>
+      </div>
     );
   }
 }
