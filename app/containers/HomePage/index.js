@@ -11,19 +11,21 @@
 
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Header, Button } from 'semantic-ui-react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { Container } from 'semantic-ui-react';
+import CurrencyCard from '../../components/CurrencyCard';
+import InputAmount from '../../components/InputAmount';
+import AddCurrency from '../../components/AddCurrency';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
   render() {
     return (
       <div>
-        <Header>
-          <FormattedMessage {...messages.header} />
-        </Header>
-        <Button> OK </Button>
+        <Container text>
+          <InputAmount />
+          <CurrencyCard />
+          <AddCurrency />
+        </Container>
       </div>
     );
   }
