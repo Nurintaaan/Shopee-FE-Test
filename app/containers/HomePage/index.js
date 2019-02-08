@@ -16,7 +16,10 @@ import CurrencyCard from '../../components/CurrencyCard';
 import InputAmount from '../../components/InputAmount';
 import AddCurrency from '../../components/AddCurrency';
 
-const API = process.env.API_URL || 'https://cors-anywhere.herokuapp.com/https://api.exchangeratesapi.io/';
+// to enable cors, in development environment
+const API =
+  process.env.API_URL ||
+  'https://cors-anywhere.herokuapp.com/https://api.exchangeratesapi.io/';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
