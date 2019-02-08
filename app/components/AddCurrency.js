@@ -10,38 +10,87 @@
  */
 
 import React from 'react';
+import Proptypes from 'prop-types';
 import 'semantic-ui-css/semantic.min.css';
 import { Button, Grid, Icon, Dropdown } from 'semantic-ui-react';
-
-const newLocal = { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' };
-const countryOptions = [newLocal];
+import currenciesDescription from '../containers/HomePage/currenciesDescription';
 
 /* eslint-disable react/prefer-stateless-function */
-export default class AddCurrency extends React.PureComponent {
+class AddCurrency extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isVisible: false,
+      value: [],
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  toggleClick = () => {
+    this.setState({ isVisible: true });
+  };
+
+  handleChange = (e, { value }) => this.setState({ value });
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.addCurrency(this.state.value);
+    this.setState({ isVisible: false });
+  };
+
+  generateOptions = () => {
+    const result = [];
+    Object.entries(currenciesDescription).forEach(entry => {
+      const currency = entry[0];
+      if (!this.props.data.includes(currency)) {
+        result.push({ key: currency, value: currency, text: currency });
+      }
+    });
+    return result;
+  };
+
   render() {
+    const options = this.generateOptions();
+    const { isVisible } = this.state;
     return (
       <div>
-        <Button fluid>
-          <Icon name="add" />
-          Add More Currencies
-        </Button>
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width="10">
-              <Dropdown
-                placeholder="Select Country"
-                fluid
-                search
-                selection
-                options={countryOptions}
-              />
-            </Grid.Column>
-            <Grid.Column width="6">
-              <Button fluid>Submit</Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        {!isVisible && (
+          <Button fluid onClick={this.toggleClick}>
+            <Icon name="add" />
+            Add More Currencies
+          </Button>
+        )}
+        {isVisible && (
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width="12">
+                <Dropdown
+                  placeholder="Select Country"
+                  fluid
+                  search
+                  selection
+                  options={options}
+                  onChange={this.handleChange}
+                />
+              </Grid.Column>
+              <Grid.Column width="4">
+                <Button fluid onClick={this.handleSubmit}>
+                  Submit
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )}
       </div>
     );
   }
 }
+
+AddCurrency.propTypes = {
+  data: Proptypes.array,
+  addCurrency: Proptypes.func,
+};
+
+export default AddCurrency;

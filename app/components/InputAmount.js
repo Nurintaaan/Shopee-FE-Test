@@ -10,12 +10,14 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'semantic-ui-css/semantic.min.css';
 import { Header, Grid, Form } from 'semantic-ui-react';
 
 /* eslint-disable react/prefer-stateless-function */
-export default class InputAmount extends React.PureComponent {
+class InputAmount extends React.PureComponent {
   render() {
+    const { amount, handleChange } = this.props;
     return (
       <div>
         <Grid padded>
@@ -30,7 +32,13 @@ export default class InputAmount extends React.PureComponent {
             </Grid.Column>
             <Grid.Column width="6">
               <Form>
-                <Form.Input value="1000" type="number" />
+                <Form.Input
+                  type="number"
+                  name="amount"
+                  value={amount}
+                  onChange={handleChange}
+                  step="0.01"
+                />
               </Form>
             </Grid.Column>
           </Grid.Row>
@@ -39,3 +47,10 @@ export default class InputAmount extends React.PureComponent {
     );
   }
 }
+
+InputAmount.propTypes = {
+  handleChange: PropTypes.func,
+  amount: PropTypes.number,
+};
+
+export default InputAmount;
